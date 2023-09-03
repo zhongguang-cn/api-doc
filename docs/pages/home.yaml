@@ -1,0 +1,36 @@
+openapi: 3.0.0
+info:
+  description: |
+    This OpenAPI site documents the overal APIs used in AO.space system. It consists of following sections:
+
+    # Agent
+    In this section, we will show the APIs involved when a client binds to a AO.space. And the binding process includes below steps:
+
+    - Setting up wifi connection for the AO.space device (optional).
+    - Exchanging public keys (for basic authentication).
+    - Exchange session key (for following symmetric encryption).
+    - Piring client with AO.space (for c/s information sync-up).
+    - Setting an admin passcode (for taking ownership of the device).
+    - Final initialization (for all backend services boot-up).
+
+    # Gateway
+    In this section, we will list the APIs involved in the advanced authentication process for creating an end-to-end encryption channel using the HTTP protocol. These APIs are built on top of the basic public keys authentication mentioned above. And this authentication includes below two key parts:
+
+    - access-token: used to be access the resources of AO.space.
+    - session-secret: used to implement end-to-end encryption.
+    
+    # AOFS
+    In this section, we will explore the file system APIs that are specifically designed for managing files hosted in AO.space. These APIs can be used with  "call", "download", and "upload" operations through the end-to-end HTTP encryption channel provided by the above Gateway service.
+
+  title: AO.space API
+  version: 1.0.0
+  contact:
+    name: API Support
+    email: service@ao.space
+    url: https://ao.space/
+  x-logo:
+    url: 'assets/aospace-en.png'
+    altText: AO.space logo
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
