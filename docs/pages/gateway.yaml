@@ -46,54 +46,45 @@ info:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 tags:
-- name: Account service Personal Info Resource
-  description: Provides account info requests.
-- name: Admin user service
-  description: Provide admin user revoke/bind requests.
-- name: Authing Token Service
-  description: 提供访问令牌相关的服务。你可以使用访问令牌进行进一步的调用请求。
-- name: Backup and restore service
-  description: Provides account backup and restore.
-- name: Device storage Service
-  description: Provides overall device requests.
-- name: Member manage service
-  description: Provides member migration requests.
-- name: Product Platform Service
-  description: Provides product platform related APIs.
-- name: Registry Platform Service
-  description: Provides registry platform related APIs.
-- name: Security Message Service (since 1.0.7)
-  description: 安全密码相关的消息处理接口。
-- name: Security Password Service (since 1.0.7)
-  description: 密码 http 接口类。提供修改/重置等接口。
-- name: Space Gateway Admin-authing Service
-  description: 提供管理员访问令牌相关的服务。你可以使用访问令牌进行进一步的调用请求。
-- name: Space Gateway Generic-call Service
+- name: Account
+  description: Provides account info related interface.
+- name: Administrator
+  description: Provide admin user revoke/bind related interface.
+- name: Authentication
+  description: Provides access tokens or QR code related interfaces.
+- name: Backup
+  description: Provides account backup and restore related interface.
+- name: Devices
+  description: Provides overall device related interface.
+- name: Gateway
   description: "Provides overall space requests' auth, encrypt, decrypt and router\
-    \ service."
-- name: Space Gateway Hello Service
-  description: Provides gateway service hello helper APIs(used for testing).
-- name: Space Gateway Notification Service
-  description: Provides Notification Service.
-- name: Space Gateway QRCode-scanning Service
-  description: Provides overall space requests' scan QR code service.
-- name: Space Gateway QRCode-scanning Service base on TOTP
-  description: Provides overall space requests' scan QR code service base on TOTP.
-- name: Space Gateway Status Service
-  description: Provides gateway service status related APIs.
-- name: Space Gateway Version-checking Service
-  description: 提供 app、box 版本查询相关接口.
-- name: Space Gateway Video On Demand Service
-  description: Provides Video On Demand APIs.
-- name: Space QRCode-scanning Service base on TOTP
-  description: Provides overall space requests' scan QR code service base on TOTP.
-- name: Terminal authorization Service
-  description: Provides authorized terminal services.
+    \ gateway interface."
+- name: Hello
+  description: Provides gateway service hello helper APIs(only used for testing).
+- name: Members
+  description: Provides members related interface.
+- name: Migration
+  description: Provides member migration related interface.
+- name: Notification
+  description: Provides Notification related interfaces.
+- name: Platform
+- name: QRCode
+  description: Provides overall space requests' scan QR code related interfaces.
+- name: Security
+  description: Security password related interface.
+- name: Status
+  description: Provides gateway service status related interfaces.
+- name: Terminal
+  description: Provides authorized terminal related interface.
+- name: VOD
+  description: Provides Video On Demand related interfaces.
+- name: Version
+  description: Provies app and device version related interfaces.
 paths:
   /space/hello:
     get:
       tags:
-      - Space Gateway Hello Service
+      - Hello
       responses:
         "200":
           description: OK
@@ -104,7 +95,7 @@ paths:
   /space/hello/download:
     get:
       tags:
-      - Space Gateway Hello Service
+      - Hello
       parameters:
       - name: content
         in: query
@@ -120,7 +111,7 @@ paths:
   /space/hello/upload:
     post:
       tags:
-      - Space Gateway Hello Service
+      - Hello
       requestBody:
         content:
           multipart/form-data:
@@ -136,7 +127,7 @@ paths:
   /space/hello/upload-one:
     post:
       tags:
-      - Space Gateway Hello Service
+      - Hello
       parameters:
       - name: FileName
         in: query
@@ -158,8 +149,8 @@ paths:
   /space/status:
     get:
       tags:
-      - Space Gateway Status Service
-      description: Try to ask the current status of server.
+      - Status
+      description: Ask the current status of server
       responses:
         "200":
           description: OK
@@ -170,8 +161,8 @@ paths:
   /space/v1/api/accountinfo:
     get:
       tags:
-      - Backup and restore service
-      description: Tries to get all member info. Provide only for file service
+      - Backup
+      description: Get all member info
       parameters:
       - name: Request-Id
         in: header
@@ -189,8 +180,8 @@ paths:
   /space/v1/api/admin/dev-options/switch:
     get:
       tags:
-      - Admin user service
-      description: 获得当前开发者选项开关状态
+      - Administrator
+      description: Get devopts switch info
       parameters:
       - name: userId
         in: query
@@ -215,8 +206,8 @@ paths:
                 $ref: '#/components/schemas/ResponseBaseDevOptionsSwitch'
     post:
       tags:
-      - Admin user service
-      description: 修改当前开发者选项开关状态
+      - Administrator
+      description: Update devopts switch info
       parameters:
       - name: userId
         in: query
@@ -247,8 +238,8 @@ paths:
   /space/v1/api/admin/inital/status:
     post:
       tags:
-      - Admin user service
-      description: admin initial status
+      - Administrator
+      description: Initial admin status
       parameters:
       - name: Request-Id
         in: header
@@ -280,7 +271,7 @@ paths:
   /space/v1/api/admin/passwd/check:
     get:
       tags:
-      - Admin user service
+      - Administrator
       description: Tries to create administrator into database.
       parameters:
       - name: Request-Id
@@ -310,8 +301,8 @@ paths:
   /space/v1/api/admin/passwd/get:
     get:
       tags:
-      - Admin user service
-      description: Tries to create administrator into database.
+      - Administrator
+      description: Get device and passcode info
       parameters:
       - name: Request-Id
         in: header
@@ -329,8 +320,8 @@ paths:
   /space/v1/api/admin/passwd/set:
     post:
       tags:
-      - Admin user service
-      description: Tries to create administrator into database.
+      - Administrator
+      description: Create or update passcode
       parameters:
       - name: Request-Id
         in: header
@@ -353,8 +344,8 @@ paths:
   /space/v1/api/auth/auto/login:
     post:
       tags:
-      - Space Gateway QRCode-scanning Service
-      description: authorized terminal login
+      - QRCode
+      description: Update auto login
       parameters:
       - name: Request-Id
         in: header
@@ -377,8 +368,8 @@ paths:
   /space/v1/api/auth/auto/login/confirm:
     post:
       tags:
-      - Space Gateway QRCode-scanning Service
-      description: authorized terminal login
+      - QRCode
+      description: Confirm login
       parameters:
       - name: Request-Id
         in: header
@@ -401,8 +392,8 @@ paths:
   /space/v1/api/auth/auto/login/poll:
     post:
       tags:
-      - Space Gateway QRCode-scanning Service
-      description: authorized terminal login
+      - QRCode
+      description: Poll login info
       parameters:
       - name: Request-Id
         in: header
@@ -425,10 +416,8 @@ paths:
   /space/v1/api/auth/bkey/create:
     post:
       tags:
-      - Space Gateway QRCode-scanning Service
-      description: "Get authorization code; NOTE: you need to use encrypted(symmetric\
-        \ key) auth-key, client uuid, boxName, boxUUID to exchange an authCode;  authCode\
-        \ in the response uses symmetric key encryption"
+      - QRCode
+      description: Get authorization code
       parameters:
       - name: Request-Id
         in: header
@@ -451,8 +440,8 @@ paths:
   /space/v1/api/auth/bkey/poll:
     post:
       tags:
-      - Space Gateway QRCode-scanning Service
-      description: "short-polling the result (caller: scan code mobile phone)"
+      - QRCode
+      description: Short-polling the result
       parameters:
       - name: autoLogin
         in: query
@@ -481,9 +470,8 @@ paths:
   /space/v1/api/auth/bkey/refresh:
     post:
       tags:
-      - Space Gateway QRCode-scanning Service
-      description: 'Tries to refresh an access token for further api call with a refresh-token.
-        you need to use encrypted(box public key) tmpEncryptedSecret; '
+      - QRCode
+      description: Refresh an access token
       parameters:
       - name: tmpEncryptedSecret
         in: query
@@ -510,11 +498,8 @@ paths:
   /space/v1/api/auth/bkey/verify:
     post:
       tags:
-      - Space Gateway QRCode-scanning Service
-      description: "Verify the authorization code on the new device side (caller:\
-        \ front end of the new device box); NOTE: you need to use encrypted(box public\
-        \ key) authCode, bkey, tmpEncryptedSecret; encryptedSecret, boxName, boxUUID\
-        \ in the response uses tmpEncryptedSecret encryption"
+      - QRCode
+      description: Verify the authorization code on the new device side
       parameters:
       - name: Request-Id
         in: header
@@ -537,8 +522,8 @@ paths:
   /space/v1/api/auth/token/verify:
     get:
       tags:
-      - Authing Token Service
-      description: Tries to verify an access token for further api call.
+      - Authentication
+      description: Verify an access token
       parameters:
       - name: access-token
         in: query
@@ -562,8 +547,8 @@ paths:
   /space/v1/api/auth/totp/auth-code:
     get:
       tags:
-      - Space QRCode-scanning Service base on TOTP
-      description: '成员调用获取 authCode. '
+      - Authentication
+      description: Get auth code
       parameters:
       - name: userId
         in: query
@@ -588,8 +573,8 @@ paths:
   /space/v1/api/auth/totp/auth-code/verify:
     get:
       tags:
-      - Space QRCode-scanning Service base on TOTP
-      description: '成员 调用 验证 authCode. '
+      - Authentication
+      description: Verify auth code
       parameters:
       - name: auth-code
         in: query
@@ -620,8 +605,8 @@ paths:
   /space/v1/api/auth/totp/bkey/poll:
     post:
       tags:
-      - Space QRCode-scanning Service base on TOTP
-      description: 成员端调用设置自动登录并获取扫码结果. 通过 call 接口调用
+      - Authentication
+      description: Poll scan result
       parameters:
       - name: autoLogin
         in: query
@@ -657,8 +642,8 @@ paths:
   /space/v1/api/auth/totp/bkey/verify:
     post:
       tags:
-      - Space QRCode-scanning Service base on TOTP
-      description: 成员端调用绑定 bkey 归属的 userid。 授权端创建 bkey时，成员端验证 bkey。 通过 call 接口调用
+      - Authentication
+      description: Create bkey owned by userid
       parameters:
       - name: bkey
         in: query
@@ -689,8 +674,8 @@ paths:
   /space/v1/api/device/hardware/info:
     get:
       tags:
-      - Device storage Service
-      description: 获取设备硬件信息 (since 1.0.7)
+      - Devices
+      description: Get device hardware information.
       parameters:
       - name: AccessToken-clientUUID
         in: query
@@ -722,8 +707,8 @@ paths:
   /space/v1/api/device/network/channel/wan:
     post:
       tags:
-      - Device storage Service
-      description: 网络通道信息
+      - Devices
+      description: Update network information
       parameters:
       - name: AccessToken-clientUUID
         in: query
@@ -760,8 +745,8 @@ paths:
   /space/v1/api/device/setting/info:
     get:
       tags:
-      - Device storage Service
-      description: 盒子&用户 设置信息
+      - Devices
+      description: Get device & user setting information
       parameters:
       - name: AccessToken-clientUUID
         in: query
@@ -793,8 +778,8 @@ paths:
   /space/v1/api/device/storage/info:
     get:
       tags:
-      - Device storage Service
-      description: Tries to get storage information and terminal type.
+      - Devices
+      description: Get storage information and terminal type.
       parameters:
       - name: userId
         in: query
@@ -818,8 +803,8 @@ paths:
   /space/v1/api/gateway/auth/public-key:
     get:
       tags:
-      - Space Gateway Admin-authing Service
-      description: get box public key
+      - Authentication
+      description: Get device public key
       parameters:
       - name: Request-Id
         in: header
@@ -837,8 +822,8 @@ paths:
   /space/v1/api/gateway/auth/revoke:
     post:
       tags:
-      - Space Gateway Admin-authing Service
-      description: 解绑管理员客户端。
+      - Authentication
+      description: Revoke member client
       parameters:
       - name: Request-Id
         in: header
@@ -862,10 +847,8 @@ paths:
   /space/v1/api/gateway/auth/token/create:
     post:
       tags:
-      - Space Gateway Admin-authing Service
-      description: "Tries to get an admin access token for further api call. NOTE:\
-        \ you need to use encrypted(box public key) auth-key and client uuid to exchange\
-        \ an access token."
+      - Authentication
+      description: Create an admin access token
       parameters:
       - name: Request-Id
         in: header
@@ -888,9 +871,8 @@ paths:
   /space/v1/api/gateway/auth/token/refresh:
     post:
       tags:
-      - Space Gateway Admin-authing Service
-      description: Tries to refresh an admin access token for further api call with
-        a refresh-token.
+      - Authentication
+      description: Refresh an admin access token
       parameters:
       - name: Request-Id
         in: header
@@ -913,8 +895,8 @@ paths:
   /space/v1/api/gateway/auth/token/verify:
     get:
       tags:
-      - Space Gateway Admin-authing Service
-      description: Tries to verify an admin access token for further api call.
+      - Authentication
+      description: Verify an admin access token
       parameters:
       - name: access-token
         in: query
@@ -938,9 +920,8 @@ paths:
   /space/v1/api/gateway/call:
     post:
       tags:
-      - Space Gateway Generic-call Service
-      description: Tries to handle and forward a space call request to underlying
-        service regarding with specified service and api name.
+      - Gateway
+      description: Call request
       parameters:
       - name: Request-Id
         in: header
@@ -963,9 +944,8 @@ paths:
   /space/v1/api/gateway/download:
     post:
       tags:
-      - Space Gateway Generic-call Service
-      description: Tries to handle and forward a space file download request to underlying
-        service regarding with specified service and api name.
+      - Gateway
+      description: Download request
       parameters:
       - name: Request-Id
         in: header
@@ -984,8 +964,8 @@ paths:
   /space/v1/api/gateway/poll:
     get:
       tags:
-      - Space Gateway Notification Service
-      description: Try to poll the current Notification of server.
+      - Notification
+      description: Poll the current notification
       parameters:
       - name: accessToken
         in: query
@@ -1009,7 +989,8 @@ paths:
   /space/v1/api/gateway/sse:
     get:
       tags:
-      - Space Gateway Generic-call Service
+      - Gateway
+      description: SEE request
       parameters:
       - name: clientUuid
         in: query
@@ -1037,8 +1018,8 @@ paths:
   /space/v1/api/gateway/totp/bkey:
     get:
       tags:
-      - Space Gateway QRCode-scanning Service base on TOTP
-      description: 被授权端调用获取 bkey 和公钥.
+      - QRCode
+      description: Get bkey and public key
       parameters:
       - name: spaceId
         in: query
@@ -1059,8 +1040,8 @@ paths:
                 $ref: '#/components/schemas/ResponseBaseCreateBkeyInfo'
     post:
       tags:
-      - Space Gateway QRCode-scanning Service base on TOTP
-      description: 被授权端调用获取 bkey.
+      - QRCode
+      description: Create bkey
       parameters:
       - name: Request-Id
         in: header
@@ -1078,8 +1059,8 @@ paths:
   /space/v1/api/gateway/totp/bkey/poll:
     post:
       tags:
-      - Space Gateway QRCode-scanning Service base on TOTP
-      description: 被授权端轮询校检结果.
+      - QRCode
+      description: Poll bkey result
       parameters:
       - name: Request-Id
         in: header
@@ -1102,7 +1083,7 @@ paths:
   /space/v1/api/gateway/totp/bkey/verify:
     post:
       tags:
-      - Space Gateway QRCode-scanning Service base on TOTP
+      - QRCode
       parameters:
       - name: Request-Id
         in: header
@@ -1125,9 +1106,8 @@ paths:
   /space/v1/api/gateway/upload:
     post:
       tags:
-      - Space Gateway Generic-call Service
-      description: Tries to handle and forward a space file upload request to underlying
-        service regarding with specified service and api name.
+      - Gateway
+      description: Upload request
       parameters:
       - name: Request-Id
         in: header
@@ -1150,8 +1130,8 @@ paths:
   /space/v1/api/gateway/version/app:
     get:
       tags:
-      - Space Gateway Version-checking Service
-      description: app 版本检查， 转发平台侧 /v2/service/packages/version/check
+      - Version
+      description: Get app version check result
       parameters:
       - name: appName
         in: query
@@ -1191,8 +1171,8 @@ paths:
   /space/v1/api/gateway/version/box:
     get:
       tags:
-      - Space Gateway Version-checking Service
-      description: box 版本检查， 转发平台侧 /v2/service/packages/version/check
+      - Version
+      description: Get device version check result
       parameters:
       - name: appName
         in: query
@@ -1228,8 +1208,8 @@ paths:
   /space/v1/api/gateway/version/box/current:
     get:
       tags:
-      - Space Gateway Version-checking Service
-      description: 获取 box 当前版本
+      - Version
+      description: Get device current version
       parameters:
       - name: Request-Id
         in: header
@@ -1247,8 +1227,8 @@ paths:
   /space/v1/api/gateway/version/compatible:
     get:
       tags:
-      - Space Gateway Version-checking Service
-      description: app、box版本兼容性 转发平台侧 /v2/service/packages/compatibility/check
+      - Version
+      description: Check app and device compatible result
       parameters:
       - name: appName
         in: query
@@ -1284,8 +1264,8 @@ paths:
   /space/v1/api/member/list:
     get:
       tags:
-      - Account service Personal Info Resource
-      description: Tries to all user information.
+      - Account
+      description: Get all account information.
       parameters:
       - name: userId
         in: query
@@ -1309,9 +1289,8 @@ paths:
   /space/v1/api/member/name/update:
     post:
       tags:
-      - Account service Personal Info Resource
-      description: "Tries to update member name information, only admin and yourself\
-        \ has right."
+      - Account
+      description: Update account name information(admin only operation).
       parameters:
       - name: userId
         in: query
@@ -1340,8 +1319,8 @@ paths:
   /space/v1/api/member/used/storage:
     get:
       tags:
-      - Member manage service
-      description: 获取各个用户所占用空间
+      - Members
+      description: Get member storage info
       parameters:
       - name: aoid
         in: query
@@ -1371,8 +1350,8 @@ paths:
   /space/v1/api/notification:
     get:
       tags:
-      - Space Gateway Notification Service
-      description: get notification.
+      - Notification
+      description: Get notification.
       parameters:
       - name: messageId
         in: query
@@ -1401,8 +1380,8 @@ paths:
                 $ref: '#/components/schemas/ResponseBaseNotificationEntity'
     post:
       tags:
-      - Space Gateway Notification Service
-      description: add notification.
+      - Notification
+      description: Add notification.
       parameters:
       - name: Request-Id
         in: header
@@ -1424,8 +1403,8 @@ paths:
                 type: string
     delete:
       tags:
-      - Space Gateway Notification Service
-      description: delete notification.
+      - Notification
+      description: Delete notification
       parameters:
       - name: messageId
         in: query
@@ -1455,8 +1434,8 @@ paths:
   /space/v1/api/notification/all:
     post:
       tags:
-      - Space Gateway Notification Service
-      description: get all notification. page 页码，默认1 pageSize页码大小，默认10
+      - Notification
+      description: List all notification
       parameters:
       - name: AccessToken-clientUUID
         in: query
@@ -1491,8 +1470,8 @@ paths:
   /space/v1/api/notification/all/delete:
     post:
       tags:
-      - Space Gateway Notification Service
-      description: delete all notification.
+      - Notification
+      description: Delete all notification
       parameters:
       - name: AccessToken-clientUUID
         in: query
@@ -1527,8 +1506,8 @@ paths:
   /space/v1/api/notification/set/read:
     post:
       tags:
-      - Space Gateway Notification Service
-      description: set notification read status .
+      - Notification
+      description: Set notification read status
       parameters:
       - name: AccessToken-clientUUID
         in: query
@@ -1563,9 +1542,8 @@ paths:
   /space/v1/api/personal/image:
     get:
       tags:
-      - Account service Personal Info Resource
-      description: "Tries to download personal image, you also can get the image of\
-        \ other member by clientUUID"
+      - Account
+      description: Download personal image.
       parameters:
       - name: aoid
         in: query
@@ -1589,7 +1567,8 @@ paths:
   /space/v1/api/personal/image/update:
     post:
       tags:
-      - Account service Personal Info Resource
+      - Account
+      description: Update account image information.
       parameters:
       - name: userId
         in: query
@@ -1618,8 +1597,8 @@ paths:
   /space/v1/api/personal/info:
     get:
       tags:
-      - Account service Personal Info Resource
-      description: Tries to get personal information.
+      - Account
+      description: Get personal account information.
       parameters:
       - name: userId
         in: query
@@ -1642,9 +1621,8 @@ paths:
                 $ref: '#/components/schemas/ResponseBaseArrayListAccountInfoResult'
     put:
       tags:
-      - Account service Personal Info Resource
-      description: "Tries to update member information, only admin and yourself has\
-        \ right."
+      - Account
+      description: Update member information
       parameters:
       - name: userId
         in: query
@@ -1673,8 +1651,8 @@ paths:
   /space/v1/api/personal/info/update:
     post:
       tags:
-      - Account service Personal Info Resource
-      description: Tries to update personal name and sign information.
+      - Account
+      description: Update account name and sign information.
       parameters:
       - name: userId
         in: query
@@ -1703,8 +1681,8 @@ paths:
   /space/v1/api/security/message/poll:
     post:
       tags:
-      - Security Message Service (since 1.0.7)
-      description: 消息轮询接口.
+      - Security
+      description: Poll message
       parameters:
       - name: AccessToken-clientUUID
         in: query
@@ -1741,8 +1719,8 @@ paths:
   /space/v1/api/security/message/poll/local:
     post:
       tags:
-      - Security Message Service (since 1.0.7)
-      description: 消息轮询接口(called by system-agent).
+      - Security
+      description: Poll message(called by system-agent).
       parameters:
       - name: Request-Id
         in: header
@@ -1779,8 +1757,8 @@ paths:
   /space/v1/api/security/passwd/modify/auther:
     post:
       tags:
-      - Security Password Service (since 1.0.7)
-      description: 授权端提交修改
+      - Security
+      description: Update modificaton auther
       parameters:
       - name: AccessToken-clientUUID
         in: query
@@ -1817,8 +1795,8 @@ paths:
   /space/v1/api/security/passwd/modify/auther/apply:
     post:
       tags:
-      - Security Password Service (since 1.0.7)
-      description: 授权端请求修改
+      - Security
+      description: Upate auth
       parameters:
       - name: AccessToken-clientUUID
         in: query
@@ -1855,8 +1833,8 @@ paths:
   /space/v1/api/security/passwd/modify/binder:
     post:
       tags:
-      - Security Password Service (since 1.0.7)
-      description: 绑定端直接修改(使用原密码)
+      - Security
+      description: Update binder(using password)
       parameters:
       - name: AccessToken-clientUUID
         in: query
@@ -1893,8 +1871,8 @@ paths:
   /space/v1/api/security/passwd/modify/binder/accept:
     post:
       tags:
-      - Security Password Service (since 1.0.7)
-      description: 绑定端允许修改
+      - Security
+      description: Update modification binder
       parameters:
       - name: AccessToken-clientUUID
         in: query
@@ -1931,8 +1909,8 @@ paths:
   /space/v1/api/security/passwd/reset/auther/apply:
     post:
       tags:
-      - Security Password Service (since 1.0.7)
-      description: 授权端请求重置
+      - Security
+      description: Reset password
       parameters:
       - name: AccessToken-clientUUID
         in: query
@@ -1969,8 +1947,8 @@ paths:
   /space/v1/api/security/passwd/reset/auther/local:
     post:
       tags:
-      - Security Password Service (since 1.0.7)
-      description: 授权端提交重置(called by system-agent)
+      - Security
+      description: Reset password(called by system-agent)
       parameters:
       - name: Request-Id
         in: header
@@ -2007,8 +1985,8 @@ paths:
   /space/v1/api/security/passwd/reset/binder/accept:
     post:
       tags:
-      - Security Password Service (since 1.0.7)
-      description: 绑定端允许重置
+      - Security
+      description: Update password reset binder
       parameters:
       - name: AccessToken-clientUUID
         in: query
@@ -2045,8 +2023,8 @@ paths:
   /space/v1/api/security/passwd/reset/binder/local:
     post:
       tags:
-      - Security Password Service (since 1.0.7)
-      description: 绑定端直接重置(called by system-agent)
+      - Security
+      description: Reset binder(called by system-agent)
       parameters:
       - name: Request-Id
         in: header
@@ -2083,8 +2061,8 @@ paths:
   /space/v1/api/security/passwd/reset/newdevice/apply/local:
     post:
       tags:
-      - Security Password Service (since 1.0.7)
-      description: 新设备申请重置(called by system-agent)
+      - Security
+      description: Set new password from new device(called by system-agent)
       parameters:
       - name: Request-Id
         in: header
@@ -2121,8 +2099,8 @@ paths:
   /space/v1/api/security/passwd/reset/newdevice/local:
     post:
       tags:
-      - Security Password Service (since 1.0.7)
-      description: 新设备提交重置(called by system-agent)
+      - Security
+      description: Reset new device password(called by system-agent)
       parameters:
       - name: Request-Id
         in: header
@@ -2133,22 +2111,24 @@ paths:
       - name: btid
         in: header
         schema:
-          description: 配对的 btid
+          description: pairing btid
           type: string
       - name: btidSign
         in: header
         schema:
-          description: "使用盒子私钥对 btid 签名, 签名算法用 sha256."
+          description: "use the private key of the box to sign btid, the signature\
+            \ algorithm used is sha256."
           type: string
       - name: clientUuid
         in: header
         schema:
-          description: 配对的 clientUuid
+          description: paring clientUuid
           type: string
       - name: clientUuidSign
         in: header
         schema:
-          description: "使用盒子私钥对 clientUuid 签名, 签名算法用 sha256."
+          description: "use the private key of the box to sign clientUuid, and use\
+            \ the SHA256 algorithm for signing."
           type: string
       requestBody:
         content:
@@ -2165,8 +2145,8 @@ paths:
   /space/v1/api/security/passwd/verify:
     post:
       tags:
-      - Security Password Service (since 1.0.7)
-      description: 验证安全密码(获取 SecurityTokenRes). 其他两步验证需要先调用本接口作为第一步验证
+      - Security
+      description: Verify password
       parameters:
       - name: AccessToken-clientUUID
         in: query
@@ -2203,8 +2183,8 @@ paths:
   /space/v1/api/space/admin:
     post:
       tags:
-      - Admin user service
-      description: create space own admin
+      - Administrator
+      description: Create space admin
       parameters:
       - name: Request-Id
         in: header
@@ -2227,8 +2207,8 @@ paths:
   /space/v1/api/space/platform:
     post:
       tags:
-      - Admin user service
-      description: change platform url
+      - Administrator
+      description: Change platform url
       parameters:
       - name: Request-Id
         in: header
@@ -2251,8 +2231,8 @@ paths:
   /space/v1/api/terminal/all/info:
     get:
       tags:
-      - Terminal authorization Service
-      description: Tries to get authorized terminal information by userId.
+      - Terminal
+      description: Get authorized terminal information by userId.
       parameters:
       - name: aoid
         in: query
@@ -2280,8 +2260,8 @@ paths:
   /space/v1/api/terminal/info:
     get:
       tags:
-      - Terminal authorization Service
-      description: Tries to get authorized terminal information by userId.
+      - Terminal
+      description: Get authorized terminal information by userId.
       parameters:
       - name: aoid
         in: query
@@ -2315,8 +2295,8 @@ paths:
   /space/v1/api/terminal/info/delete:
     post:
       tags:
-      - Terminal authorization Service
-      description: Tries to get authorized terminal information by userId.
+      - Terminal
+      description: Get authorized terminal information by userId.
       parameters:
       - name: aoid
         in: query
@@ -2351,8 +2331,8 @@ paths:
                 $ref: '#/components/schemas/ResponseBaseAuthorizedTerminalResult'
     delete:
       tags:
-      - Terminal authorization Service
-      description: Tries to get authorized terminal information by userId.
+      - Terminal
+      description: Get authorized terminal information by userId.
       parameters:
       - name: aoid
         in: query
@@ -2388,8 +2368,8 @@ paths:
   /space/v1/api/terminal/logout:
     post:
       tags:
-      - Terminal authorization Service
-      description: Tries to get authorized terminal information by userId.
+      - Terminal
+      description: Get authorized terminal information by userId.
       parameters:
       - name: AccessToken-clientUUID
         in: query
@@ -2429,8 +2409,8 @@ paths:
   /space/v1/api/user:
     get:
       tags:
-      - Member manage service
-      description: Tries to get member info from database.
+      - Members
+      description: Get member info
       parameters:
       - name: client_uuid
         in: query
@@ -2452,8 +2432,8 @@ paths:
   /space/v1/api/user/client/revoke:
     post:
       tags:
-      - Admin user service
-      description: 撤回对于指定用户的客户端授权信息。该接口支持对任意已存在的用户进行操作（包括管理员）。
+      - Administrator
+      description: Revoke user auth info
       parameters:
       - name: Request-Id
         in: header
@@ -2490,8 +2470,8 @@ paths:
   /space/v1/api/user/clientuuid:
     get:
       tags:
-      - Member manage service
-      description: Tries to get member info from database.
+      - Members
+      description: Get member client info
       parameters:
       - name: userid
         in: query
@@ -2515,8 +2495,8 @@ paths:
   /space/v1/api/user/migration:
     get:
       tags:
-      - Member manage service
-      description: 获取 migration 信息
+      - Migration
+      description: Get migration info
       parameters:
       - name: Request-Id
         in: header
@@ -2533,8 +2513,8 @@ paths:
                 $ref: '#/components/schemas/ResponseBaseBoxMigrationInfo'
     put:
       tags:
-      - Member manage service
-      description: migration 更新域名信息
+      - Migration
+      description: Update migration info
       parameters:
       - name: Request-Id
         in: header
@@ -2557,8 +2537,8 @@ paths:
   /space/v1/api/vod/check:
     get:
       tags:
-      - Space Gateway Video On Demand Service
-      description: check vod coding status
+      - VOD
+      description: Check vod coding status
       parameters:
       - name: userId
         in: query
@@ -2588,8 +2568,8 @@ paths:
   /space/v1/api/vod/m3u8:
     get:
       tags:
-      - Space Gateway Video On Demand Service
-      description: get vod m3u8 file
+      - VOD
+      description: Get vod m3u8 file
       parameters:
       - name: userId
         in: query
@@ -2615,8 +2595,7 @@ paths:
   /space/v2/platform/ability:
     get:
       tags:
-      - Registry Platform Service
-      description: 能力查询
+      - Platform
       parameters:
       - name: Request-Id
         in: header
@@ -2634,7 +2613,7 @@ paths:
   /space/v2/platform/auth/box_reg_keys:
     post:
       tags:
-      - Registry Platform Service
+      - Platform
       parameters:
       - name: Request-Id
         in: header
@@ -2657,7 +2636,7 @@ paths:
   /space/v2/platform/boxes/{box_uuid}/users:
     post:
       tags:
-      - Registry Platform Service
+      - Platform
       parameters:
       - name: box_uuid
         in: path
@@ -2692,7 +2671,7 @@ paths:
   /space/v2/platform/boxes/{box_uuid}/users/{user_id}:
     delete:
       tags:
-      - Registry Platform Service
+      - Platform
       parameters:
       - name: box_uuid
         in: path
@@ -2724,7 +2703,7 @@ paths:
   /space/v2/platform/boxes/{box_uuid}/users/{user_id}/clients:
     post:
       tags:
-      - Registry Platform Service
+      - Platform
       parameters:
       - name: box_uuid
         in: path
@@ -2765,7 +2744,7 @@ paths:
   /space/v2/platform/boxes/{box_uuid}/users/{user_id}/clients/{client_uuid}:
     delete:
       tags:
-      - Registry Platform Service
+      - Platform
       parameters:
       - name: box_uuid
         in: path
@@ -2803,8 +2782,7 @@ paths:
   /space/v2/platform/status:
     get:
       tags:
-      - Registry Platform Service
-      description: 查询空间平台状态
+      - Platform
       parameters:
       - name: Request-Id
         in: header
@@ -2822,7 +2800,7 @@ paths:
   /space/v2/service/packages/compatibility/check:
     get:
       tags:
-      - Product Platform Service
+      - Platform
       parameters:
       - name: app_pkg_name
         in: query
@@ -2881,7 +2859,7 @@ paths:
   /space/v2/service/packages/version/check:
     get:
       tags:
-      - Product Platform Service
+      - Platform
       parameters:
       - name: action
         in: query
@@ -2929,7 +2907,7 @@ paths:
   /space/v2/service/status:
     get:
       tags:
-      - Product Platform Service
+      - Platform
       description: 查询空间平台状态
       parameters:
       - name: Request-Id
@@ -2948,7 +2926,7 @@ paths:
   /space/v2/service/trail/boxuser:
     get:
       tags:
-      - Product Platform Service
+      - Platform
       description: 根据用户userid查询注册信息
       parameters:
       - name: box_uuid
